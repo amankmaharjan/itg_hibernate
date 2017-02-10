@@ -1,5 +1,7 @@
 package org.itglance.hibernate.entity;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -11,25 +13,27 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "studenttbl")
 public class Student {
-	
+
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "student_id")
 	private int id;
-	
+
 	@Column(name = "first_name")
 	private String fname;
-	
+
 	@Column(name = "last_name")
 	private String lname;
-	
-	@Embedded
-	private Address address;
 
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", fname=" + fname + ", lname=" + lname + ", address=" + address + "]";
-	}
+	@Embedded
+	@AttributeOverrides({ @AttributeOverride(name = "country", column = @Column(name = "per_country")),
+			@AttributeOverride(name = "city", column = @Column(name = "per_city")) })
+	private Address perAddress;
+
+	@Embedded
+	@AttributeOverrides({ @AttributeOverride(name = "country", column = @Column(name = "temp_country")),
+			@AttributeOverride(name = "city", column = @Column(name = "temp_city")) })
+	private Address tempAddress;
 
 	public int getId() {
 		return id;
@@ -55,33 +59,31 @@ public class Student {
 		this.lname = lname;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	
-	public Student(int id, String fname, String lname, Address address) {
-		super();
-		this.id = id;
-		this.fname = fname;
-		this.lname = lname;
-		this.address = address;
-	}
-	
-	
-
-	public Student(String fname, String lname, Address address) {
-		super();
-		this.fname = fname;
-		this.lname = lname;
-		this.address = address;
-	}
-
 	public Student() {
 		super();
 	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", fname=" + fname + ", lname=" + lname + ", perAddress=" + perAddress
+				+ ", tempAddress=" + tempAddress + "]";
+	}
+
+	public Address getPerAddress() {
+		return perAddress;
+	}
+
+	public void setPerAddress(Address perAddress) {
+		this.perAddress = perAddress;
+	}
+
+	public Address getTempAddress() {
+		return tempAddress;
+	}
+
+	public void setTempAddress(Address tempAddress) {
+		this.tempAddress = tempAddress;
+	}
+	
+	
 }

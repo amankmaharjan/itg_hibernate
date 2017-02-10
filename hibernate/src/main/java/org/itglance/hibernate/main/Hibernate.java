@@ -16,17 +16,18 @@ public class Hibernate {
 	public void insert() {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		
+
 		Student student1 = new Student();
 		student1.setFname("nischal");
 		student1.setLname("shakya");
-		
-		Address address1 = new Address("nepal", "kathmandu");
-		student1.setAddress(address1);
-		
+
+		Address perAddress = new Address("nepal", "kathmandu");
+		Address tempAddress = new Address("usa", "new york");
+
+		student1.setTempAddress(tempAddress);
+		student1.setPerAddress(perAddress);
 		session.save(student1);
-		
-		
+
 		session.getTransaction().commit();
 		session.close();
 	}
@@ -40,8 +41,8 @@ public class Hibernate {
 		if (studentUpdate != null) {
 			studentUpdate.setFname("rashik");
 			studentUpdate.setLname("shakya");
-			studentUpdate.getAddress().setCity("patan");
-			studentUpdate.getAddress().setCountry("nepal");
+			studentUpdate.getPerAddress().setCity("patan");
+			studentUpdate.getPerAddress().setCountry("nepal");
 			session.update(studentUpdate);
 		}
 		session.getTransaction().commit();
@@ -74,7 +75,7 @@ public class Hibernate {
 
 	public static void main(String args[]) {
 		Hibernate hibernate = new Hibernate();
-		
+
 		System.out.println("student insert");
 		hibernate.insert();
 		hibernate.display();
@@ -82,10 +83,10 @@ public class Hibernate {
 		System.out.println("student update");
 		hibernate.update();
 		hibernate.display();
-		
+
 		System.out.println("student delete");
-		hibernate.delete();
-		hibernate.display();
+		// hibernate.delete();
+		// hibernate.display();
 	}
 
 }
