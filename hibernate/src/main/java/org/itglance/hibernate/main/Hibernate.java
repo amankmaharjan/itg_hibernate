@@ -1,11 +1,9 @@
 package org.itglance.hibernate.main;
 
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 import org.itglance.hibernate.entity.Address;
 import org.itglance.hibernate.entity.Student;
 
@@ -17,15 +15,17 @@ public class Hibernate {
 		Session session = sf.openSession();
 		session.beginTransaction();
 
+		Address address1 = new Address("nepal", "kathmandu");
+		Address address2 = new Address("usa", "new york");
+
 		Student student1 = new Student();
 		student1.setFname("nischal");
 		student1.setLname("shakya");
 
-		Address perAddress = new Address("nepal", "kathmandu");
-		Address tempAddress = new Address("usa", "new york");
+		
+		student1.getListOfAddress().add(address1);
+		student1.getListOfAddress().add(address2);
 
-		student1.setTempAddress(tempAddress);
-		student1.setPerAddress(perAddress);
 		session.save(student1);
 
 		session.getTransaction().commit();
@@ -39,11 +39,20 @@ public class Hibernate {
 		System.out.println("student info to be updated");
 		System.out.println(studentUpdate.toString());
 		if (studentUpdate != null) {
+
 			studentUpdate.setFname("rashik");
 			studentUpdate.setLname("shakya");
-			studentUpdate.getPerAddress().setCity("patan");
-			studentUpdate.getPerAddress().setCountry("nepal");
+
+			System.out.println(studentUpdate.getListOfAddress().toString());
+			Address studentAddress = studentUpdate.getListOfAddress().get(0);
+
+			studentAddress.setCity("patan");
+			studentAddress.setCountry("nepal");
+
+			studentUpdate.getListOfAddress().add(studentAddress);
+
 			session.update(studentUpdate);
+
 		}
 		session.getTransaction().commit();
 		session.close();
@@ -52,7 +61,7 @@ public class Hibernate {
 	public void delete() {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		Student studentDelete = session.get(Student.class, 4);
+		Student studentDelete = session.get(Student.class, 1);
 		System.out.println("student info to be deleted");
 		System.out.println(studentDelete.toString());
 		if (studentDelete != null) {
@@ -62,15 +71,13 @@ public class Hibernate {
 		session.close();
 	}
 
-	@SuppressWarnings("rawtypes")
 	public void display() {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		Query query = session.createQuery("from Student");
-		@SuppressWarnings("unchecked")
-		List<Student> studentList = query.getResultList();
+		@SuppressWarnings({ "deprecation", "unchecked" })
+		List<Student> listOfStudent = session.createCriteria(Student.class).list();
 		System.out.println("student information");
-		System.out.println(studentList.toString());
+		System.out.println(listOfStudent.toString());
 	}
 
 	public static void main(String args[]) {
@@ -85,8 +92,8 @@ public class Hibernate {
 		hibernate.display();
 
 		System.out.println("student delete");
-		// hibernate.delete();
-		// hibernate.display();
+		hibernate.delete();
+		hibernate.display();
 	}
 
 }

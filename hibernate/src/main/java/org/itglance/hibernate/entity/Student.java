@@ -1,9 +1,10 @@
 package org.itglance.hibernate.entity;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Column;
-import javax.persistence.Embedded;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,16 +25,9 @@ public class Student {
 
 	@Column(name = "last_name")
 	private String lname;
-
-	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "country", column = @Column(name = "per_country")),
-			@AttributeOverride(name = "city", column = @Column(name = "per_city")) })
-	private Address perAddress;
-
-	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "country", column = @Column(name = "temp_country")),
-			@AttributeOverride(name = "city", column = @Column(name = "temp_city")) })
-	private Address tempAddress;
+	
+	@ElementCollection
+	private List<Address> listOfAddress = new LinkedList<>();
 
 	public int getId() {
 		return id;
@@ -63,27 +57,19 @@ public class Student {
 		super();
 	}
 
+	public List<Address> getListOfAddress() {
+		return listOfAddress;
+	}
+
+	public void setListOfAddress(List<Address> listOfAddress) {
+		this.listOfAddress = listOfAddress;
+	}
+
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", fname=" + fname + ", lname=" + lname + ", perAddress=" + perAddress
-				+ ", tempAddress=" + tempAddress + "]";
+		return "Student [id=" + id + ", fname=" + fname + ", lname=" + lname + ", listOfAddress=" + listOfAddress + "]";
 	}
-
-	public Address getPerAddress() {
-		return perAddress;
-	}
-
-	public void setPerAddress(Address perAddress) {
-		this.perAddress = perAddress;
-	}
-
-	public Address getTempAddress() {
-		return tempAddress;
-	}
-
-	public void setTempAddress(Address tempAddress) {
-		this.tempAddress = tempAddress;
-	}
+	
 	
 	
 }
