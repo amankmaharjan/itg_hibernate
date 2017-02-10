@@ -1,0 +1,19 @@
+// Apply the java plugin to add support for Java
+apply plugin: 'java'
+
+// Apply the application plugin to add support for building an application
+apply plugin: 'application'
+
+// In this section you declare where to find the dependencies of your project
+repositories {    
+    jcenter()
+}
+
+dependencies {
+   	compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.5'
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.6.Final'
+}
+
+// Define the main class for the application
+mainClassName = 'org.itglance.hibernate.main.Hibernate'
+
