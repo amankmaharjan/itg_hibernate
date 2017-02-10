@@ -1,6 +1,7 @@
 package org.itglance.hibernate.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +23,8 @@ public class Student {
 	@Column(name = "last_name")
 	private String lname;
 	
-	@Column(name = "address")
-	private String address;
+	@Embedded
+	private Address address;
 
 	@Override
 	public String toString() {
@@ -54,23 +55,26 @@ public class Student {
 		this.lname = lname;
 	}
 
-	public String getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 
-	public Student(int id, String fname, String lname, String address) {
+	
+	public Student(int id, String fname, String lname, Address address) {
 		super();
 		this.id = id;
 		this.fname = fname;
 		this.lname = lname;
 		this.address = address;
 	}
+	
+	
 
-	public Student(String fname, String lname, String address) {
+	public Student(String fname, String lname, Address address) {
 		super();
 		this.fname = fname;
 		this.lname = lname;

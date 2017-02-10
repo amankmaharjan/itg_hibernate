@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.itglance.hibernate.entity.Address;
 import org.itglance.hibernate.entity.Student;
 
 public class Hibernate {
@@ -15,10 +16,17 @@ public class Hibernate {
 	public void insert() {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		session.save(new Student("nischal", "shakya", "dallu"));
-		session.save(new Student("ram", "maharjan", "khusibu"));
-		session.save(new Student("shyam", "shrestha", "lagan"));
-		session.save(new Student("sita", "rai", "chamati"));
+		
+		Student student1 = new Student();
+		student1.setFname("nischal");
+		student1.setLname("shakya");
+		
+		Address address1 = new Address("nepal", "kathmandu");
+		student1.setAddress(address1);
+		
+		session.save(student1);
+		
+		
 		session.getTransaction().commit();
 		session.close();
 	}
@@ -32,7 +40,8 @@ public class Hibernate {
 		if (studentUpdate != null) {
 			studentUpdate.setFname("rashik");
 			studentUpdate.setLname("shakya");
-			studentUpdate.setAddress("bansathali");
+			studentUpdate.getAddress().setCity("patan");
+			studentUpdate.getAddress().setCountry("nepal");
 			session.update(studentUpdate);
 		}
 		session.getTransaction().commit();
