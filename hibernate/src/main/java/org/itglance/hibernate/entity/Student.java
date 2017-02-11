@@ -6,10 +6,11 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Table;
 
 @Entity
@@ -26,8 +27,10 @@ public class Student {
 
 	@Column(name = "last_name")
 	private String lname;
-	
-	@ElementCollection(fetch = FetchType.EAGER)
+
+	@ElementCollection
+	@JoinTable(name = "address",
+		joinColumns = @JoinColumn(name = "user_id"))
 	private List<Address> listOfAddress = new LinkedList<>();
 
 	public int getId() {
@@ -70,7 +73,5 @@ public class Student {
 	public String toString() {
 		return "Student [id=" + id + ", fname=" + fname + ", lname=" + lname + ", listOfAddress=" + listOfAddress + "]";
 	}
-	
-	
-	
+
 }

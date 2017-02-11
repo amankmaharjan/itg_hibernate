@@ -74,18 +74,12 @@ public class Hibernate {
 
 	public void display() {
 		Session session = sf.openSession();
-		session.beginTransaction();
-		
+		session.beginTransaction();		
 		@SuppressWarnings({ "deprecation", "unchecked" })		
-		List<Student> listOfStudent = session.createCriteria(Student.class).list();
-		session.close();
-		
-		for (Student eagerStudent : listOfStudent){
-			System.out.println(eagerStudent.getFname());
-			System.out.println(eagerStudent.getListOfAddress().get(0));
-		}
-		
+		List<Student> listOfStudent = session.createCriteria(Student.class).list();		
 		System.out.println("student information");
+		System.out.println(listOfStudent.toString());
+		session.close();
 	}
 
 	public static void main(String args[]) {
@@ -96,12 +90,12 @@ public class Hibernate {
 		hibernate.display();
 
 		System.out.println("student update");
-		//hibernate.update();
-		//hibernate.display();
+		hibernate.update();
+		hibernate.display();
 
 		System.out.println("student delete");
-		//hibernate.delete();
-		//hibernate.display();
+		hibernate.delete();
+		hibernate.display();
 	}
 
 }
