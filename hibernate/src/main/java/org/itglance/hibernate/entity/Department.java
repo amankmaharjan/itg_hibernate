@@ -10,12 +10,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "departmenttbl")
 public class Department {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "departmentid")
 	private int departmentId;
-	
+
 	@Column(name = "departmentname")
 	private String departmentName;
 
@@ -23,8 +23,8 @@ public class Department {
 		super();
 		this.departmentName = departmentName;
 	}
-	
-	public  Department(){
+
+	public Department() {
 		super();
 	}
 

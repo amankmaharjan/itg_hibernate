@@ -19,8 +19,8 @@ public class Hibernate {
 		employee1.setFname("Hari");
 		employee1.setLname("Prasad");
 		Department department1 = new Department("Human Resource");
-		employee1.setDepartment(department1);		
-		session.save(employee1);	
+		employee1.setDepartment(department1);
+		session.save(employee1);
 		session.save(department1);
 		session.getTransaction().commit();
 		session.close();
@@ -56,13 +56,16 @@ public class Hibernate {
 		session.close();
 	}
 
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	public void display() {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		@SuppressWarnings({ "deprecation", "unchecked" })
 		List<Employee> listOfEmployee = session.createCriteria(Employee.class).list();
 		System.out.println("employee information");
 		System.out.println(listOfEmployee.toString());
+		List<Department> listOfDepartment = session.createCriteria(Department.class).list();
+		System.out.println("department information");
+		System.out.println(listOfDepartment.toString());
 		session.close();
 	}
 
