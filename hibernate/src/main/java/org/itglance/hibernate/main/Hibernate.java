@@ -5,8 +5,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.itglance.hibernate.entity.Address;
-import org.itglance.hibernate.entity.Student;
+import org.itglance.hibernate.entity.Department;
+import org.itglance.hibernate.entity.Employee;
 
 public class Hibernate {
 
@@ -15,20 +15,13 @@ public class Hibernate {
 	public void insert() {
 		Session session = sf.openSession();
 		session.beginTransaction();
-
-		Address address1 = new Address("nepal", "kathmandu");
-		Address address2 = new Address("usa", "new york");
-
-		Student student1 = new Student();
-		student1.setFname("nischal");
-		student1.setLname("shakya");
-
-		
-		student1.getListOfAddress().add(address1);
-		student1.getListOfAddress().add(address2);
-
-		session.save(student1);
-
+		Employee employee1 = new Employee();
+		employee1.setFname("Hari");
+		employee1.setLname("Prasad");
+		Department department1 = new Department("Human Resource");
+		employee1.setDepartment(department1);		
+		session.save(employee1);	
+		session.save(department1);
 		session.getTransaction().commit();
 		session.close();
 	}
@@ -36,23 +29,14 @@ public class Hibernate {
 	public void update() {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		Student studentUpdate = session.get(Student.class, 1);
+		Employee employeeUpdate = session.get(Employee.class, 1);
 		System.out.println("student info to be updated");
-		System.out.println(studentUpdate.toString());
-		if (studentUpdate != null) {
-
-			studentUpdate.setFname("rashik");
-			studentUpdate.setLname("shakya");
-
-			System.out.println(studentUpdate.getListOfAddress().toString());
-			Address studentAddress = studentUpdate.getListOfAddress().get(0);
-
-			studentAddress.setCity("patan");
-			studentAddress.setCountry("nepal");
-
-			studentUpdate.getListOfAddress().add(studentAddress);
-
-			session.update(studentUpdate);
+		System.out.println(employeeUpdate.toString());
+		if (employeeUpdate != null) {
+			employeeUpdate.setFname("Ram");
+			employeeUpdate.setLname("Krisha");
+			employeeUpdate.getDepartment().setDepartmentName("Marketing");
+			session.update(employeeUpdate);
 
 		}
 		session.getTransaction().commit();
@@ -62,11 +46,11 @@ public class Hibernate {
 	public void delete() {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		Student studentDelete = session.get(Student.class, 1);
-		System.out.println("student info to be deleted");
-		System.out.println(studentDelete.toString());
-		if (studentDelete != null) {
-			session.delete(studentDelete);
+		Employee employeetDelete = session.get(Employee.class, 1);
+		System.out.println("employee info to be deleted");
+		System.out.println(employeetDelete.toString());
+		if (employeetDelete != null) {
+			session.delete(employeetDelete);
 		}
 		session.getTransaction().commit();
 		session.close();
@@ -74,26 +58,26 @@ public class Hibernate {
 
 	public void display() {
 		Session session = sf.openSession();
-		session.beginTransaction();		
-		@SuppressWarnings({ "deprecation", "unchecked" })		
-		List<Student> listOfStudent = session.createCriteria(Student.class).list();		
-		System.out.println("student information");
-		System.out.println(listOfStudent.toString());
+		session.beginTransaction();
+		@SuppressWarnings({ "deprecation", "unchecked" })
+		List<Employee> listOfEmployee = session.createCriteria(Employee.class).list();
+		System.out.println("employee information");
+		System.out.println(listOfEmployee.toString());
 		session.close();
 	}
 
 	public static void main(String args[]) {
 		Hibernate hibernate = new Hibernate();
 
-		System.out.println("student insert");
+		System.out.println("employee insert");
 		hibernate.insert();
 		hibernate.display();
 
-		System.out.println("student update");
+		System.out.println("employee update");
 		hibernate.update();
 		hibernate.display();
 
-		System.out.println("student delete");
+		System.out.println("employee delete");
 		hibernate.delete();
 		hibernate.display();
 	}
