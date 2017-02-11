@@ -1,6 +1,7 @@
 package org.itglance.hibernate.main;
 
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -74,10 +75,21 @@ public class Hibernate {
 	public void display() {
 		Session session = sf.openSession();
 		session.beginTransaction();
-		@SuppressWarnings({ "deprecation", "unchecked" })
+		
+		@SuppressWarnings({ "deprecation", "unchecked" })		
 		List<Student> listOfStudent = session.createCriteria(Student.class).list();
+		
 		System.out.println("student information");
-		System.out.println(listOfStudent.toString());
+		
+		
+
+		for (Student listStudent : listOfStudent){
+			System.out.println(listStudent.getFname());
+			System.out.println(listStudent.getListOfAddress().toString());
+		}
+		
+		session.close();
+		
 	}
 
 	public static void main(String args[]) {
