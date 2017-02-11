@@ -26,7 +26,7 @@ public class Employee {
 	private String lname;
 
 	@JoinColumn(name = "department_id")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade= CascadeType.ALL)
 	private Department department;
 
 	public int getEmployeeId() {

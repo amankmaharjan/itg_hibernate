@@ -16,12 +16,19 @@ public class Hibernate {
 		Session session = sf.openSession();
 		session.beginTransaction();
 		Employee employee1 = new Employee();
+		
 		employee1.setFname("Hari");
 		employee1.setLname("Prasad");
-		Department department1 = new Department("Human Resource");
+		
+		Department department1 = new Department();
+		
+		department1.setDepartmentName("Human Resource");
 		employee1.setDepartment(department1);
-		session.save(employee1);
+		department1.getEmployeeList().add(employee1);
+		
+		
 		session.save(department1);
+		
 		session.getTransaction().commit();
 		session.close();
 	}
@@ -65,7 +72,11 @@ public class Hibernate {
 		System.out.println(listOfEmployee.toString());
 		List<Department> listOfDepartment = session.createCriteria(Department.class).list();
 		System.out.println("department information");
-		System.out.println(listOfDepartment.toString());
+		for (Department ddepartmentList : listOfDepartment) {
+			//List<Employee> departmentEmployee = ddepartmentList.getEmployeeList();
+			System.out.println(ddepartmentList.getEmployeeList().size());
+			
+		}
 		session.close();
 	}
 
@@ -77,12 +88,12 @@ public class Hibernate {
 		hibernate.display();
 
 		System.out.println("employee update");
-		hibernate.update();
-		hibernate.display();
+		// hibernate.update();
+		// hibernate.display();
 
 		System.out.println("employee delete");
-		hibernate.delete();
-		hibernate.display();
+		// hibernate.delete();
+		// hibernate.display();
 	}
 
 }
