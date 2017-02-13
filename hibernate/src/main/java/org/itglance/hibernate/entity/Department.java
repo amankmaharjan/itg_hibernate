@@ -51,8 +51,6 @@ public class Department {
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
 	}
-	
-	
 
 	public List<Employee> getEmployeeList() {
 		return employeeList;
@@ -64,6 +62,10 @@ public class Department {
 
 	@Override
 	public String toString() {
+		return "Department [departmentId=" + departmentId + ", departmentName=" + departmentName + "]";
+	}
+
+	public String getDepartment() {
 		return "Department [departmentId=" + departmentId + ", departmentName=" + departmentName + ", employeeList="
 				+ employeeList + "]";
 	}

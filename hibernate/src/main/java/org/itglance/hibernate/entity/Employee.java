@@ -1,6 +1,5 @@
 package org.itglance.hibernate.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Alucard
+ *
+ */
 @Entity
 @Table(name = "employeetbl")
 public class Employee {
@@ -26,7 +29,7 @@ public class Employee {
 	private String lname;
 
 	@JoinColumn(name = "department_id")
-	@ManyToOne(cascade= CascadeType.ALL)
+	@ManyToOne
 	private Department department;
 
 	public int getEmployeeId() {
@@ -60,6 +63,8 @@ public class Employee {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
+
+	
 
 	@Override
 	public String toString() {
