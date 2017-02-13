@@ -16,19 +16,18 @@ public class Hibernate {
 		Session session = sf.openSession();
 		session.beginTransaction();
 		Employee employee1 = new Employee();
-		
+
 		employee1.setFname("Hari");
 		employee1.setLname("Prasad");
-		
+
 		Department department1 = new Department();
-		
+
 		department1.setDepartmentName("Human Resource");
 		employee1.setDepartment(department1);
 		department1.getEmployeeList().add(employee1);
-		
-		
+
 		session.save(department1);
-		
+
 		session.getTransaction().commit();
 		session.close();
 	}
@@ -62,19 +61,17 @@ public class Hibernate {
 		session.getTransaction().commit();
 		session.close();
 	}
-
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	
+	@SuppressWarnings("unchecked")
 	public void display() {
 		Session session = sf.openSession();
-		session.beginTransaction();
-		List<Employee> listOfEmployee = session.createCriteria(Employee.class).list();
+		session.beginTransaction();		
+		List<Department> listOfEmployee = session.createQuery("from Department").getResultList();
 		System.out.println("employee information");
-		System.out.println(listOfEmployee.toString());
-		List<Department> listOfDepartment = session.createCriteria(Department.class).list();
-		System.out.println("department information");
-		for (Department ddepartmentList : listOfDepartment) {
-			//List<Employee> departmentEmployee = ddepartmentList.getEmployeeList();
-			System.out.println(ddepartmentList.getEmployeeList().size());
+		for (Department emp : listOfEmployee){
+			for(Employee empl : emp.getEmployeeList()){
+				System.out.println(empl.getFname());
+			}
 			
 		}
 		session.close();
