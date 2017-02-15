@@ -85,6 +85,22 @@ public class Hibernate {
 		System.out.println(displayStudent.toString());
 		session.close();
 	}
+	
+	public void displayfromSubject(){
+		Session session = sf.openSession();
+		session.beginTransaction();
+		@SuppressWarnings("unchecked")
+		List<Subject> displaySubject = session.createQuery("from Subject").getResultList();
+		System.out.println("student info using subject");
+		for (Subject subjectList : displaySubject){
+			System.out.println(subjectList.getSubjectName());
+			for (Student studentList : subjectList.getStudents()){
+				System.out.println(studentList.getFname());
+				System.out.println(studentList.getLname());
+			}
+		}
+		session.close();
+	}
 
 	public static void main(String args[]) {
 
@@ -93,10 +109,12 @@ public class Hibernate {
 		System.out.println("studnet insert");
 		hibernate.insert();
 		hibernate.display();
+		
+		hibernate.displayfromSubject();
 		//hibernate.update();
-		hibernate.display();
-		hibernate.delete();
-		hibernate.display();
+		//hibernate.display();
+		//hibernate.delete();
+		//hibernate.display();
 	}
 
 }
