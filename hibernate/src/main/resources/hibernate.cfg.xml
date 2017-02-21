@@ -10,7 +10,8 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">create</property>
-		<mapping class="org.itglance.hibernate.entity.Student" />
-		<mapping class="org.itglance.hibernate.entity.Subject" />
+		<mapping class="org.itglance.hibernate.entity.Android" />
+		<mapping class="org.itglance.hibernate.entity.IPhone" />
+		<mapping class="org.itglance.hibernate.entity.Mobile" />
 	</session-factory>
 </hibernate-configuration>
