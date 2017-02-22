@@ -39,6 +39,7 @@ public class Hibernate {
 	}
 
 	public void update() {
+		
 		Session session = sf.openSession();
 		session.beginTransaction();
 
